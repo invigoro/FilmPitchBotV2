@@ -13,14 +13,41 @@ tmdb.debug = True
 MIN_YEAR = 1925
 YEAR_TOLERANCE = 3
 PAGE_MAX = 10
+OVERVIEW_SENTENCE_GOAL_LENGTH = 55
+OVERVIEW_MAX_LENGTH = 200
+TITLE_GOAL_LENGTH = 30
+CAST_COUNT_MAX = 5
+CAST_COUNT_MIN = 2
 
 year = getRandomYear(MIN_YEAR, inverseSquareFunction)
-print(year)
-
 
 films = getFilms(year, YEAR_TOLERANCE, PAGE_MAX)
-overviews = list(map(lambda film: film.overview, films))
+the_movie = generatedProduction()
+the_movie.setYear(year)
 
-bigrams = createBigrams(overviews)
-trigrams = createTrigrams(overviews)
+# First, get the overview
+text = list(map(lambda film: film.overview, films))
+bigrams = createBigrams(text)
+trigrams = createTrigrams(text)
+overview = []
+while True:
+    seed = getRandomSentenceStart(text)
+    sen = generateSentence(bigrams, trigrams, seed, None, OVERVIEW_SENTENCE_GOAL_LENGTH)
+    if(countSentenceCharacters(overview) + countSentenceCharacters(sen) > OVERVIEW_MAX_LENGTH):
+        break
+    overview.extend(sen)
+the_movie.overview = " ".join(overview)
 
+# Second, get the title
+text = list(map(lambda film: film.title, films))
+bigrams = createBigrams(text)
+trigrams = createTrigrams(text)
+seed = getRandomSentenceStart(text)
+the_movie.title = " ".join(generateSentence(bigrams, trigrams, seed, None, TITLE_GOAL_LENGTH))
+
+# Last, get a cast list & director
+ids = list(map(lambda film: film.id, films))
+the_movie.cast = getCastMembers(ids, CAST_COUNT_MIN, CAST_COUNT_MAX)
+the_movie.director = getDirector(ids)
+
+print(the_movie.getInfo())

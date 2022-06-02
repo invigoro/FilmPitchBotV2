@@ -82,7 +82,7 @@ def getNext(bigrams, trigrams, sentence, endSentenceWeight = 0):
 
 
     else: # should only happen at the beginning of the sentence
-        return getRandomGram(bigrams[sentence[0]])
+        return getRandomGram(bigrams.get(sentence[0]))
 
 
 def getFilteredDict(dic, filteredKeys, weight):
@@ -115,7 +115,7 @@ def generateSentence(bigrams, trigrams, seed, prev, goalLength):
         sentence.append(seed)
     else:
         # base it on prev 2 words
-        prevEnd = str.split(prev, ' ')[-2:-1]
+        prevEnd = prev[-2:]
         sentenceStart = getNext(bigrams, trigrams, prevEnd, 0)
         # should it do two words or just do the one for a cleaner break?
         # sentence = [sentenceStart, getNext(bigrams, trigrams, [prevEnd[-1], sentenceStart])]
@@ -142,3 +142,8 @@ def cleanParagraph(paragraphs):
         spl = pattern.findall(p)
         result.extend(spl)
     return result
+
+def getRandomSentenceStart(paragraphs):
+    cleaned = cleanParagraph(paragraphs)
+    start = random.randint(0, len(cleaned) - 1)
+    return str.split(cleaned[start], " ")[0]

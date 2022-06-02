@@ -16,4 +16,3 @@ assert sq >= 0 and sq <= 125
 
 year = getRandomYear(1955, inverseSquareFunction)
 assert year >= 1955 and year <= date.today().year
-

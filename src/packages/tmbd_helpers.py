@@ -29,16 +29,30 @@ def getCastMembers(ids, min, max):
     mov = Movie()
     cast = set()
     num = random.randint(min, max)
-    while(len(cast) < num):
-        id = ids[random.randint(0, len(ids))]
-        credits = mov.credits(id)
-        actor = credits.cast[0] or None
-        if(not actor or cast[actor]):
-            continue
-        cast.add(actor)
+    tries = 0
+    while(len(cast) < num and tries < 10):
+        try: 
+            id = ids[random.randint(0, len(ids))]
+            credits = mov.credits(id)
+            actor = credits.cast[0] or None
+            if(not actor or actor.name in cast):
+                continue
+            cast.add(actor.name)
+        except:
+            tries += 1
 
     return cast
 
 def getDirector(ids):
-    id = random.randint(0, len(ids) - 1)
     mov = Movie()
+    director = None
+    tries = 0
+    while director is None and tries < 10:
+        try:
+            id = random.randint(0, len(ids) - 1)
+            crew = mov.credits(id)["crew"]
+            director = next(c for c in crew if c["job"] == "Director").name
+            break
+        except:
+            tries += 1
+    return director
