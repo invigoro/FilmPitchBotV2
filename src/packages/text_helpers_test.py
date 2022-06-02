@@ -7,6 +7,9 @@ assert isinstance(bigrams, dict)
 trigrams = createTrigrams(paragraphs)
 assert isinstance(trigrams, dict)
 
+merged = mergeGrams(bigrams, trigrams)
+merged = mergeGrams(bigrams, merged)
+
 sentenceCount = countSentenceCharacters(["This", "sentence", "is", "short."])
 assert sentenceCount == 23
 

@@ -1,4 +1,4 @@
-from tmdbv3api import Discover, Movie
+from tmdbv3api import Discover, Movie, Search
 from classes import *
 import random
 
@@ -56,3 +56,14 @@ def getDirector(ids):
         except:
             tries += 1
     return director
+
+def searchMovies(search, pages):
+    search = Search()
+    films = []
+    for page in range(1, pages):
+        movies = search.movies({
+            'query': search,
+            'page': page
+        })
+        films.extend(convertFilms(movies))
+    return films

@@ -62,6 +62,21 @@ def createTrigrams(paragraphs):
                 }
     return trigrams
 
+# for merging two dictionaries, e.g. two bigram dicts or two trigram dicts
+def mergeGrams(gram1, gram2):
+    for first, poss in gram2.items():
+        existingFirst = gram1.get(first)
+        if existingFirst:
+            for second, count in poss.items():
+                existingSecond = existingFirst.get(second)
+                if existingSecond:
+                    gram1[first][second] += count
+                else:
+                    gram1[first][second] = count
+        else:
+            gram1[first] = poss
+    return gram1
+
 
 def getNext(bigrams, trigrams, sentence, endSentenceWeight = 0):
     if(endSentenceWeight >= 1): return '\n'

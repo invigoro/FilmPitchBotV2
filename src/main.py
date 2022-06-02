@@ -12,7 +12,7 @@ tmdb.debug = True
 
 MIN_YEAR = 1925
 YEAR_TOLERANCE = 3
-PAGE_MAX = 10
+PAGE_MAX = 25
 OVERVIEW_SENTENCE_GOAL_LENGTH = 55
 OVERVIEW_MAX_LENGTH = 200
 TITLE_GOAL_LENGTH = 30
@@ -39,11 +39,17 @@ while True:
 the_movie.overview = " ".join(overview)
 
 # Second, get the title
+# Also search for other titles containing the same word
 text = list(map(lambda film: film.title, films))
-bigrams = createBigrams(text)
-trigrams = createTrigrams(text)
 seed = getRandomSentenceStart(text)
-the_movie.title = " ".join(generateSentence(bigrams, trigrams, seed, None, TITLE_GOAL_LENGTH))
+bigrams = mergeGrams(createBigrams(text), bigrams)
+trigrams = mergeGrams(createTrigrams(text), trigrams)
+newTitles = searchMovies(seed, PAGE_MAX)
+text = list(map(lambda film: film.title, newTitles))
+bigrams = mergeGrams(createBigrams(text), bigrams)
+trigrams = mergeGrams(createTrigrams(text), trigrams)
+
+the_movie.title = " ".join(generateSentence(bigrams, trigrams, seed, None, TITLE_GOAL_LENGTH)).title()
 
 # Last, get a cast list & director
 ids = list(map(lambda film: film.id, films))
