@@ -7,3 +7,12 @@ assert isinstance(bigrams, dict)
 trigrams = createTrigrams(paragraphs)
 assert isinstance(trigrams, dict)
 
+sentenceCount = countSentenceCharacters(["This", "sentence", "is", "short."])
+assert sentenceCount == 23
+
+next1 = getNext(bigrams, trigrams, ["It"])
+next2 = getNext(bigrams, trigrams, ["It", next1])
+assert isinstance(next2, str)
+
+sentence = generateSentence(bigrams, trigrams, "It", None, 100)
+print(sentence)

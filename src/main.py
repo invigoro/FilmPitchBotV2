@@ -1,9 +1,10 @@
-from tmdbv3api import TMDb, Discover, Movie
+from tmdbv3api import TMDb
 from packages.classes import *
 from packages.year_helpers import *
 from packages.tmbd_helpers import *
 from packages.text_helpers import *
 from config import TMDB_API_KEY
+
 tmdb = TMDb()
 tmdb.api_key = TMDB_API_KEY
 tmdb.language = 'en'
