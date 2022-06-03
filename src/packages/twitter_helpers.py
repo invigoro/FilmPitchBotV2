@@ -19,7 +19,7 @@ class Twitter:
     def MakePost(self, content):
         try:
             self.api.update_status(content)
-            print(f'Tweet posted: {content}')
+            print(f'Tweet posted: \n{content}')
         except:
-            sys.exit(f'Failed to post tweet. It was a good one though: {content}')
+            sys.exit(f'Failed to post tweet. It was a good one though: \n{content}')
 

@@ -14,7 +14,7 @@ tmdb.debug = True
 MIN_YEAR = 1925
 YEAR_TOLERANCE = 3
 PAGE_MAX = 25
-OVERVIEW_SENTENCE_GOAL_LENGTH = 100
+OVERVIEW_SENTENCE_GOAL_LENGTH = 90
 OVERVIEW_MAX_LENGTH = 200
 TITLE_GOAL_LENGTH = 30
 CAST_COUNT_MAX = 5
@@ -30,7 +30,8 @@ the_movie.setYear(year)
 text = list(map(lambda film: film.overview, films))
 bigrams = createBigrams(text)
 trigrams = createTrigrams(text)
-overview = []
+seed = getRandomSentenceStart(text)
+overview = generateSentence(bigrams, trigrams, seed, None, OVERVIEW_SENTENCE_GOAL_LENGTH)
 while True:
     seed = getRandomSentenceStart(text)
     sen = generateSentence(bigrams, trigrams, seed, None, OVERVIEW_SENTENCE_GOAL_LENGTH)
@@ -60,4 +61,4 @@ the_movie.director = getDirector(ids)
 formatted = the_movie.getInfo()
 
 twitter = Twitter(TWITTER_API_KEY, TWITTER_KEY_SECRET, TWITTER_CLIENT_ID, TWITTER_CLIENT_SECRET, TWITTER_BEARER_TOKEN, TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET)
-# twitter.MakePost(formatted)
+twitter.MakePost(formatted)
