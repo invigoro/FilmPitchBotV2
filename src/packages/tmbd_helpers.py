@@ -19,7 +19,11 @@ def getFilms(year, tolerance, pages):
 def convertFilms(movies):
     films = []
     for m in movies:
-        film = Film(m.title, m.overview, m.release_date, m.id)
+        film = Film(
+            m.title if hasattr(m, 'title') else None,
+            m.overview if hasattr(m, 'overview') else None, 
+            m.release_date if hasattr(m, 'release_date') else None, 
+            m.id)
         films.append(film)
 
     return films
@@ -57,12 +61,12 @@ def getDirector(ids):
             tries += 1
     return director
 
-def searchMovies(search, pages):
+def searchMovies(term, pages):
     search = Search()
     films = []
     for page in range(1, pages):
         movies = search.movies({
-            'query': search,
+            'query': term,
             'page': page
         })
         films.extend(convertFilms(movies))

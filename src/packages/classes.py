@@ -2,8 +2,11 @@ class Film:
     def __init__(self, title = None, overview = None, release_date = None, id = None):
         self.title = title
         self.overview = overview
-        self.year = int(release_date[0:4])
         self.id = id
+        try:
+            self.year = int(release_date[0:4])
+        except:
+            self.year = None
 
     cast = ""
     director = ""

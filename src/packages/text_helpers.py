@@ -154,9 +154,10 @@ def countSentenceCharacters(sentence):
 # replace ". [Capital]" with ". \n " so that we know where sentences end
 def cleanParagraph(paragraphs):
     result = []
-    pattern = re.compile(r'([A-Z][^\.!?]*[\.!?])', re.M)
+    #pattern = re.compile(r'([A-Z][^\.!?]*[\.!?])', re.M)
+    pattern = re.compile(r"(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)\s", re.M)
     for p in paragraphs:
-        spl = pattern.findall(p)
+        spl = pattern.split(p)
         result.extend(spl)
     return result
 
