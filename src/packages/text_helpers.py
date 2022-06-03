@@ -79,7 +79,7 @@ def mergeGrams(gram1, gram2):
 
 
 def getNext(bigrams, trigrams, sentence, endSentenceWeight = 0):
-    if(endSentenceWeight >= 1): return '\n'
+    if(endSentenceWeight >= 1): return '\n...'
     if(len(sentence) >= 2):
         #first remove immediate duplicates as options
         bs = bigrams.get(sentence[-1])
@@ -140,7 +140,9 @@ def generateSentence(bigrams, trigrams, seed, prev, goalLength):
     # loop through and re-weight priority for ending the sentence as it gets longer
     while(sentenceLength < goalLength * 2):
         nextWord = getNext(bigrams, trigrams, sentence, sentenceLength / (goalLength * 2))
-        if(nextWord == '\n'): 
+        if nextWord == '\n...':
+            sentence.append("...")
+        if(nextWord[0] == '\n'): 
             break
         sentence.append(nextWord)
         sentenceLength = countSentenceCharacters(sentence)
