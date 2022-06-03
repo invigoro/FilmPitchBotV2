@@ -1,4 +1,5 @@
 #from pytwitter import Api  
+import sys
 import tweepy
 
 class Twitter:
@@ -16,6 +17,9 @@ class Twitter:
         self.api = tweepy.API(auth)
 
     def MakePost(self, content):
-        self.api.update_status(content)
-        print(f'Tweet posted: {content}')
+        try:
+            self.api.update_status(content)
+            print(f'Tweet posted: {content}')
+        except:
+            sys.exit(f'Failed to post tweet. It was a good one though: {content}')
 
