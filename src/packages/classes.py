@@ -48,3 +48,24 @@ class generatedProduction:
             info += f"\nDirector: {self.director}"
         info += f"\nStarring: {', '.join(self.cast)}"
         return info
+
+    def getInfo280(self):
+        topline = f"{self.title} {f'({self.year})' if self.year else ''}" 
+        overview = f"\n{self.overview}"
+        bottomline = ""
+        if self.director:
+            bottomline += f"\nDirector: {self.director}"
+        bottomline += f"\nStarring: {', '.join(self.cast)}"
+        totallength = len(topline) + len(overview) + len(bottomline)
+        if totallength > 280:
+            overview = overview[0:-((totallength - 280) + 3)].strip() + "..."
+        return topline + overview + bottomline
+
+# Unit test for getinfo280
+""" film = generatedProduction()
+film.title = "And he and he ahsdlf;kjasd;lkfjas;lkdjfasl;kdfjasl;fadfsdkflkfkfj"
+film.setYear(2019)
+film.overview = "Oh that this too, too sullied flesh would melt, thaw, and resolve itself into a dew, or that the everlasting had not fix'd his canon 'gainst self-slaughter! Oh god! O god!"
+film.director = "Akira Kirusawa"
+film.cast = ["Johnny Depp", "Amber Heard", "Al Pacino"]
+assert len(film.getInfo280()) < 280 """

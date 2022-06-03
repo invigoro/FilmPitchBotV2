@@ -58,7 +58,7 @@ ids = list(map(lambda film: film.id, films))
 the_movie.cast = getCastMembers(ids, CAST_COUNT_MIN, CAST_COUNT_MAX)
 the_movie.director = getDirector(ids)
 
-formatted = the_movie.getInfo()
+formatted = the_movie.getInfo280()
 
 twitter = Twitter(TWITTER_API_KEY, TWITTER_KEY_SECRET, TWITTER_CLIENT_ID, TWITTER_CLIENT_SECRET, TWITTER_BEARER_TOKEN, TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET)
 twitter.MakePost(formatted)
