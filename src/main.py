@@ -3,7 +3,7 @@ from packages.classes import *
 from packages.year_helpers import *
 from packages.tmbd_helpers import *
 from packages.text_helpers import *
-from config import TMDB_API_KEY, TWITTER_API_KEY, TWITTER_KEY_SECRET, TWITTER_CLIENT_ID, TWITTER_CLIENT_SECRET, TWITTER_BEARER_TOKEN, TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET
+from config import *
 from packages.twitter_helpers import Twitter
 
 tmdb = TMDb()
@@ -61,5 +61,5 @@ the_movie.director = getDirector(ids)
 formatted = the_movie.getInfo()
 
 twitter = Twitter(TWITTER_API_KEY, TWITTER_KEY_SECRET, TWITTER_CLIENT_ID, TWITTER_CLIENT_SECRET, TWITTER_BEARER_TOKEN, TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET)
-# twitter.MakePost(formatted)
-print(formatted)
+twitter.MakePost(formatted)
+#print(formatted)
