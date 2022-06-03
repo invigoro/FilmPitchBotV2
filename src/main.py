@@ -62,3 +62,4 @@ formatted = the_movie.getInfo()
 
 twitter = Twitter(TWITTER_API_KEY, TWITTER_KEY_SECRET, TWITTER_CLIENT_ID, TWITTER_CLIENT_SECRET, TWITTER_BEARER_TOKEN, TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET)
 # twitter.MakePost(formatted)
+print(formatted)
