@@ -3,7 +3,8 @@ from packages.classes import *
 from packages.year_helpers import *
 from packages.tmbd_helpers import *
 from packages.text_helpers import *
-from config import TMDB_API_KEY, TWITTER_BEARER_TOKEN
+from config import TMDB_API_KEY, TWITTER_API_KEY, TWITTER_KEY_SECRET, TWITTER_CLIENT_ID, TWITTER_CLIENT_SECRET, TWITTER_BEARER_TOKEN, TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET
+from packages.twitter_helpers import Twitter
 
 tmdb = TMDb()
 tmdb.api_key = TMDB_API_KEY
@@ -56,4 +57,7 @@ ids = list(map(lambda film: film.id, films))
 the_movie.cast = getCastMembers(ids, CAST_COUNT_MIN, CAST_COUNT_MAX)
 the_movie.director = getDirector(ids)
 
-print(the_movie.getInfo())
+formatted = the_movie.getInfo()
+
+twitter = Twitter(TWITTER_API_KEY, TWITTER_KEY_SECRET, TWITTER_CLIENT_ID, TWITTER_CLIENT_SECRET, TWITTER_BEARER_TOKEN, TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET)
+# twitter.MakePost(formatted)
