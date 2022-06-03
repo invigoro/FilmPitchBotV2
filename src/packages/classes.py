@@ -42,6 +42,6 @@ class generatedProduction:
         info = f"{self.title} {f'({self.year})' if self.year else ''}" 
         info += f"\n{self.overview}"
         if self.director:
-            info += f"\nDirected by: {self.director}"
+            info += f"\nDirector: {self.director}"
         info += f"\nStarring: {', '.join(self.cast)}"
         return info
