@@ -8,12 +8,12 @@ def getFilms(year, tolerance, pages):
     discover = Discover()
     for page in range(1, pages):
         movies = discover.discover_movies({
-            'primary_release_date.lte': f'{year+tolerance}-01-01',
-            'primary_release_date.gte': f'{year-tolerance}-12-31',
+            'primary_release_date.gte': f'{year-tolerance}-01-01',
+            'primary_release_date.lte': f'{year+tolerance}-12-31',
             'page': page
         })
         films.extend(convertFilms(movies))
-    return films
+    return sorted(films, key=lambda f: abs(f.year - year))
 
 #converts tmbd movie object to film class
 def convertFilms(movies):
@@ -50,15 +50,17 @@ def getCastMembers(ids, min, max):
 def getDirector(ids):
     mov = Movie()
     director = None
-    tries = 0
-    while director is None and tries < 10:
+    #tries = 0
+    #while director is None and tries < 10:
+    for id in ids:
         try:
-            id = random.randint(0, len(ids) - 1)
+            #id = random.randint(0, len(ids) - 1)
             crew = mov.credits(id)["crew"]
-            director = next(c for c in crew if c["job"] == "Director").name
+            director = next(c for c in crew if c["job"] == "Director" and c["department"] == "Directing").name
             break
         except:
-            tries += 1
+            continue
+            #tries += 1
     return director
 
 def searchMovies(term, pages):
