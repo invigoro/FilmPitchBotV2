@@ -25,9 +25,9 @@ on:
   
   # Run this bad boy at an interval
   schedule:
-    - cron: "0 0 0/3 ? * * *" # every 3 hours
-    #- cron: "0 0 * ? * * *" # every day
-    
+    - cron: "0 */3 * * *" # every 3 hours
+    #- cron: "0 0 * * * *" # every day
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
