@@ -1,6 +1,6 @@
 from tmdbv3api import TMDb
 from packages.classes import *
-from packages.year_helpers import *
+from packages.math_helpers import *
 from packages.tmbd_helpers import *
 from packages.text_helpers import *
 from config import *
@@ -16,7 +16,7 @@ YEAR_TOLERANCE = 3
 PAGE_MAX = 50
 OVERVIEW_SENTENCE_GOAL_LENGTH = 85
 OVERVIEW_MAX_LENGTH = 180
-TITLE_GOAL_LENGTH = 33
+TITLE_GOAL_LENGTH = 30
 CAST_COUNT_MAX = 3
 CAST_COUNT_MIN = 1
 

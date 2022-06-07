@@ -151,7 +151,7 @@ def generateSentence(bigrams, trigrams, seed, prev, goalLength):
 def countSentenceCharacters(sentence):
     return len(' '.join(sentence))
 
-# replace ". [Capital]" with ". \n " so that we know where sentences end
+# convert array of paragraphs into array of sentences
 def cleanParagraph(paragraphs):
     result = []
     #pattern = re.compile(r'([A-Z][^\.!?]*[\.!?])', re.M)

@@ -50,17 +50,13 @@ def getCastMembers(ids, min, max):
 def getDirector(ids):
     mov = Movie()
     director = None
-    #tries = 0
-    #while director is None and tries < 10:
     for id in ids:
         try:
-            #id = random.randint(0, len(ids) - 1)
             crew = mov.credits(id)["crew"]
             director = next(c for c in crew if c["job"] == "Director" and c["department"] == "Directing").name
             break
         except:
             continue
-            #tries += 1
     return director
 
 def searchMovies(term, pages):
