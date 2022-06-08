@@ -121,8 +121,9 @@ def getRandomGram(grams):
             break
     return result
 
+#seed takes precedence of prev
 def generateSentence(bigrams, trigrams, seed, prev, goalLength):
-    if((not seed and not prev) or (seed and prev)):
+    if(not seed and not prev):
         sys.exit("Need either a previous sentence or a seed word.")
     sentence = []
     if(seed): 
@@ -162,6 +163,9 @@ def cleanParagraph(paragraphs):
     return result
 
 def getRandomSentenceStart(paragraphs):
-    cleaned = cleanParagraph(paragraphs)
-    start = random.randint(0, len(cleaned) - 1)
-    return str.split(cleaned[start], " ")[0]
+    result = None
+    while not result:
+        cleaned = cleanParagraph(paragraphs)
+        start = random.randint(0, len(cleaned) - 1)
+        result = str.split(cleaned[start], " ")[0]
+    return result
