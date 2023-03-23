@@ -41,7 +41,11 @@ def getAIPoster(title, year, tagLine):
             return image_url
         except Exception as e:
             print(e)
-            return None
+            if "safety system" in str(e).lower(): #some get rejected for containing charged or offensive words
+                print(prompt)
+                raise Exception(e)
+            else: 
+                return None
 
 def rewriteTitleAI(content, temperature = 0.3):
     instructions = (f"Rewrite this text to sound like the title of a motion picture."
