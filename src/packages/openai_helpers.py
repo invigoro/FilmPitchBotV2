@@ -33,8 +33,8 @@ def getAITagLine(description, minWords = 2, maxWords = 8, maxLength = 30, temper
 def getAIPoster(title, year, tagLine):
     prompt = (f'Movie poster for {year} movie titled "{title}: {tagLine}"')
     ### API currently only allows '256x256', '512x512', '1024x1024'
-    STD_WIDTH = 256 #int(400)
-    STD_HEIGHT = 256 #int( STD_WIDTH * 1.5)
+    STD_WIDTH = 512 #int(400)
+    STD_HEIGHT = 512 #int( STD_WIDTH * 1.5)
     for i in range(0, 3):
         try: 
             response = openai.Image.create(prompt=prompt, n=1, size=f'{STD_WIDTH}x{STD_HEIGHT}')
