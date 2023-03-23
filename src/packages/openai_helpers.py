@@ -68,6 +68,7 @@ def fixGrammarAI(content):
 
 DEFAULT_PROMPTS_IMAGE = [
     lambda title, year, tag: (f'Movie poster for {year} movie titled "{title}" whose plot can be summarized as "{tag}"'),
+    lambda title, year, tag: (f'Promotional poster for {year} movie titled "{title}" whose plot can be summarized as "{tag}"'),
     lambda title, year, tag: (f'Promotional image for {year} movie titled "{title}" whose plot can be summarized as "{tag}"'),
     lambda title, year, tag: (f'Behind-the-scenes still from {year} movie titled "{title}" whose plot can be summarized as "{tag}"'),
     lambda title, year, tag: (f'Production still from {year} movie titled "{title}" whose plot can be summarized as "{tag}"'),
