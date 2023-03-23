@@ -63,7 +63,7 @@ trigrams = mergeGrams(createTrigrams(text), trigrams)
 ### OpenAI reword
 TITLE_RANDOMNESS = 0.7
 the_movie.title = fixGrammarAI(" ".join(generateSentence(bigrams, trigrams, seed, None, TITLE_GOAL_LENGTH)).strip(". ").title())
-the_movie.title = rewriteTitleAI(the_movie.title, TITLE_RANDOMNESS).strip()
+the_movie.title = rewriteTitleAI(the_movie.title, TITLE_RANDOMNESS).strip().strip('\"')
 
 
 ### OpenAI image
