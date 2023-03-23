@@ -13,6 +13,8 @@ def getAIOverview(original, minSentences = 1, maxSentences = 3, maxLength = 180,
     prompt = (f'Write a {minSentences}-{maxSentences} sentence overview of a movie based on a description.'
     f'\nDescription: {original}'
     f'\nOverview:')
+    if len(original) > maxLength:
+        original = original[:maxLength] #insure we don't have way to big of an input by accident
     for i in range(0, 5):
         try:
             return openai.Completion.create(model=TEXT_CREATE_MODEL, prompt = prompt, temperature = temperature, max_tokens = maxLength)['choices'][0]['text']
@@ -46,6 +48,26 @@ def getAIPoster(title, year, tagLine):
                 raise Exception(e)
             else: 
                 return None
+            
+def getCastListAI(title, year, description, temperature = 1, minNames = 1, maxNames = 3, maxLength = 30):
+    names = random.randint(minNames, maxNames)
+    prompt = (f"List the names, separated by commas, of {names} possible actors who might be in a movie " 
+              f"based on the movie's title, year, and description."
+              f"\nTitle: {title}"
+              f"\nYear: {year}"
+              f"\nDescription: {description}"
+              f"\nActors:")
+    output = openai.Completion.create(model=TEXT_CREATE_MODEL, prompt = prompt, temperature = temperature, max_tokens=maxLength)['choices'][0]['text']
+    return set(output.split(", "))
+    
+def getDirectorAI(title, year, description, cast, temperature = 1, maxLength = 20):
+    prompt = (f"Write the name of a possible director of a movie based on the movie's title, year, description, and cast members."
+              f"\nTitle: {title}"
+              f"\nYear: {year}"
+              f"\nDescription: {description}"
+              f"\nCast members: {', '.join(cast)}"
+              f"\nDirector:")
+    return openai.Completion.create(model=TEXT_CREATE_MODEL, prompt = prompt, temperature = temperature, max_tokens=maxLength)['choices'][0]['text']
 
 def rewriteTitleAI(content, temperature = 0.3):
     instructions = (f"Rewrite this text to sound like the title of a motion picture."

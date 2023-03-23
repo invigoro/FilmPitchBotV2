@@ -77,9 +77,17 @@ def mainFunc():
     the_movie.imgUrl = getAIPoster(the_movie.title, the_movie.year, the_movie.tagline)
 
     # Last, get a cast list & director
-    ids = list(map(lambda film: film.id, films))
-    the_movie.cast = getCastMembers(ids, CAST_COUNT_MIN, CAST_COUNT_MAX)
-    the_movie.director = getDirector(ids)
+    ### OpenAI attempt
+    CAST_RANDOMNESS = 1.0
+    DIRECTOR_RANDOMNESS = 1.0
+    try: 
+        the_movie.cast = getCastListAI(the_movie.title, the_movie.year, the_movie.overview, CAST_RANDOMNESS, CAST_COUNT_MIN, CAST_COUNT_MAX)
+        the_movie.director = getDirectorAI(the_movie.title, the_movie.year, the_movie.overview, the_movie.cast, DIRECTOR_RANDOMNESS)
+    except Exception as e: #default to old school
+        print(e)
+        ids = list(map(lambda film: film.id, films))
+        the_movie.cast = getCastMembers(ids, CAST_COUNT_MIN, CAST_COUNT_MAX)
+        the_movie.director = getDirector(ids)
 
     formatted = the_movie.getInfo280()
 
