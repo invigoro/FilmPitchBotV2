@@ -1,4 +1,5 @@
 import openai
+import random
 
 # Load your API key from an environment variable or secret management service
 
@@ -20,9 +21,7 @@ def getAIOverview(original, minSentences = 1, maxSentences = 3, maxLength = 180,
             return original
 
 def getAITagLine(description, minWords = 2, maxWords = 8, maxLength = 30, temperature = 0.2):
-    prompt = (f'Write a {minWords}-{maxWords} word overview of a movie based on a description.'
-    f'\nDescription: {description}'
-    f'\nOverview:')
+    prompt = random.choice(DEFAULT_PROMPTS_TAGLINE)(minWords, maxWords, description)
     for i in range(0, 5):
         try:
             return openai.Completion.create(model=TEXT_CREATE_MODEL, prompt = prompt, temperature = temperature, max_tokens = maxLength)['choices'][0]['text']
@@ -31,7 +30,7 @@ def getAITagLine(description, minWords = 2, maxWords = 8, maxLength = 30, temper
             return ""
 
 def getAIPoster(title, year, tagLine):
-    prompt = (f'Movie poster for {year} movie titled "{title}: {tagLine}"')
+    prompt = random.choice(DEFAULT_PROMPTS_IMAGE)(title, year, tagLine)
     ### API currently only allows '256x256', '512x512', '1024x1024'
     STD_WIDTH = 512 #int(400)
     STD_HEIGHT = 512 #int( STD_WIDTH * 1.5)
@@ -62,3 +61,16 @@ def fixGrammarAI(content):
         except Exception as e:
             print(e)
             return content
+
+DEFAULT_PROMPTS_IMAGE = [
+    lambda title, year, tag: (f'Movie poster for {year} movie titled "{title}" whose plot can be summarized as "{tag}"'),
+    lambda title, year, tag: (f'Promotional image for {year} movie titled "{title}" whose plot can be summarized as "{tag}"'),
+    lambda title, year, tag: (f'Behind-the-scenes still from {year} movie titled "{title}" whose plot can be summarized as "{tag}"'),
+    lambda title, year, tag: (f'Production still from {year} movie titled "{title}" whose plot can be summarized as "{tag}"'),
+    lambda title, year, tag: (f'Movie frame from {year} movie titled "{title}" whose plot can be summarized as "{tag}"')
+]
+
+DEFAULT_PROMPTS_TAGLINE = [
+    lambda minWords, maxWords, description: (f'Write a {minWords}-{maxWords} word overview of a movie based on a description.\nDescription: {description}\nOverview:'),
+    lambda minWords, maxWords, description: (f'Explain what a movie is about in {minWords}-{maxWords}, given a description.\nDescription: {description}')
+]
