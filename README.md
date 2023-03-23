@@ -1,2 +1,4 @@
 # Film Pitch Bot V2
-A simple bot that uses data from [TMBd's free API](https://www.themoviedb.org/) to randomly generate a movie title, description, and cast members based on simple text prediction. These movies are then posted to [Twitter](https://twitter.com/FilmPitchBotV2).
+A simple bot that uses data from [TMBd's free API](https://www.themoviedb.org/) to randomly generate a movie title, description, and cast members based on simple text prediction. 
+Movie title and description are then reworded with [OpenAI](https://platform.openai.com) and a movie poster is generated via [DALL·E](https://labs.openai.com/).
+These movies are then posted to [Twitter](https://twitter.com/FilmPitchBotV2).

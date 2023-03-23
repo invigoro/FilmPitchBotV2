@@ -130,3 +130,6 @@ dmypy.json
 
 # Configuration
 local_config.py
+
+# Temp files
+*.jpg

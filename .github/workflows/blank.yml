@@ -4,6 +4,7 @@ name: CI
 
 env:
   TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
+  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
   TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
   TWITTER_KEY_SECRET: ${{ secrets.TWITTER_KEY_SECRET }}
   TWITTER_BEARER_TOKEN: ${{ secrets.TWITTER_BEARER_TOKEN }}
@@ -49,6 +50,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install tmdbv3api
           pip install tweepy
+          pip install openai
+          pip install requests
       - name: Run the thing
         run: |
           python src/main.py

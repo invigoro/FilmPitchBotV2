@@ -34,6 +34,8 @@ class generatedProduction:
     cast = []
     director = ""
     year = None
+    imgUrl = None
+    tagline = ""
 
     def setYear(self, year, endYear = None):
         if(endYear):
