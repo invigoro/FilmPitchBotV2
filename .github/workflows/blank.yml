@@ -52,6 +52,7 @@ jobs:
           pip install tweepy
           pip install openai
           pip install requests
+          pip install craiyon.py
       - name: Run the thing
         run: |
           python src/main.py

@@ -1,7 +1,8 @@
 import openai
 import random
-
-# Load your API key from an environment variable or secret management service
+from craiyon import Craiyon
+from datetime import datetime
+generator = Craiyon() # Instantiates the api wrapper
 
 TEXT_CREATE_MODEL = "text-davinci-003"
 TEXT_EDIT_MODEL = "text-davinci-edit-001"
@@ -31,23 +32,28 @@ def getAITagLine(description, minWords = 2, maxWords = 8, maxLength = 30, temper
             print(e) 
             return ""
 
-def getAIPoster(title, year, tagLine):
+def getAIPoster(title, year, tagLine, useCraiyon = False):
     prompt = random.choice(DEFAULT_PROMPTS_IMAGE)(title, year, tagLine)
     ### API currently only allows '256x256', '512x512', '1024x1024'
     STD_WIDTH = 512 #int(400)
     STD_HEIGHT = 512 #int( STD_WIDTH * 1.5)
     for i in range(0, 3):
+        image_url = None
+        print(f"Generating image from prompt: {prompt}")
+        start_request = datetime.now()
         try: 
-            response = openai.Image.create(prompt=prompt, n=1, size=f'{STD_WIDTH}x{STD_HEIGHT}')
-            image_url = response['data'][0]['url']
-            return image_url
+            if(useCraiyon):
+                image_url = generator.generate(prompt).images.pop()
+            else:
+                response = openai.Image.create(prompt=prompt, n=1, size=f'{STD_WIDTH}x{STD_HEIGHT}')
+                image_url = response['data'][0]['url']
         except Exception as e:
             print(e)
             if "safety system" in str(e).lower(): #some get rejected for containing charged or offensive words
                 print(prompt)
-                raise Exception(e)
-            else: 
-                return None
+                raise Exception(e)   
+        print(f'Image generation took {(datetime.now() - start_request).total_seconds} seconds.')         
+        return image_url
             
 def getCastListAI(title, year, description, temperature = 1, minNames = 1, maxNames = 3, maxLength = 30):
     names = random.randint(minNames, maxNames)
