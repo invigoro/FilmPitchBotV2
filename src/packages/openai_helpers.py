@@ -30,7 +30,7 @@ def getAITagLine(description, minWords = 2, maxWords = 8, maxLength = 30, temper
             return openai.Completion.create(model=TEXT_CREATE_MODEL, prompt = prompt, temperature = temperature, max_tokens = maxLength)['choices'][0]['text']
         except Exception as e:
             print(e) 
-            return ""
+            return description
 
 def getAIPoster(title, year, tagLine, useCraiyon = False):
     prompt = random.choice(DEFAULT_PROMPTS_IMAGE)(title, year, tagLine)

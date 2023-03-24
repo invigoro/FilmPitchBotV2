@@ -169,3 +169,13 @@ def getRandomSentenceStart(paragraphs):
         start = random.randint(0, len(cleaned) - 1)
         result = str.split(cleaned[start], " ")[0]
     return result
+
+def fixGrammar(content, isTitle):
+    content = content.strip()
+    content = removeMultipleSpaces(content)
+    if (isTitle):
+        content = content.title()
+    return content
+
+def removeMultipleSpaces(content):
+    return re.sub("[\s]*", " ", content)

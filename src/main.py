@@ -61,10 +61,11 @@ def mainFunc():
     bigrams = mergeGrams(createBigrams(text), bigrams)
     trigrams = mergeGrams(createTrigrams(text), trigrams)
     the_movie.title = " ".join(generateSentence(bigrams, trigrams, seed, None, TITLE_GOAL_LENGTH)).strip(". ").title()
+    the_movie.title = fixGrammar(the_movie.title)
 
     ### OpenAI reword
     TITLE_RANDOMNESS = 0.7
-    the_movie.title = fixGrammarAI(the_movie.title)
+    #the_movie.title = fixGrammarAI(the_movie.title)
     the_movie.title = rewriteTitleAI(the_movie.title, TITLE_RANDOMNESS).strip().strip('\"')
 
 
