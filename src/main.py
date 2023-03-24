@@ -14,7 +14,7 @@ tmdb.language = 'en'
 tmdb.debug = True
 openAIInitialize(OPENAI_API_KEY)
 
-MIN_YEAR = 1925
+MIN_YEAR = 1910
 YEAR_TOLERANCE = 3
 PAGE_MAX = 50
 OVERVIEW_SENTENCE_GOAL_LENGTH = 85
@@ -22,9 +22,10 @@ OVERVIEW_MAX_LENGTH = 180
 TITLE_GOAL_LENGTH = 22
 CAST_COUNT_MAX = 3
 CAST_COUNT_MIN = 1
+YEAR_WEIGHTING_FUNCTION = inverse1_75Function
 
 def mainFunc():
-    year = getRandomYear(MIN_YEAR, inverseSquareFunction)
+    year = getRandomYear(MIN_YEAR, YEAR_WEIGHTING_FUNCTION)
 
     films = getFilms(year, YEAR_TOLERANCE, PAGE_MAX)
     the_movie = generatedProduction()

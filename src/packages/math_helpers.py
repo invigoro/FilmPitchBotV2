@@ -14,4 +14,29 @@ def getRandomYear(min, weightingFunc):
 
 # Weights years closer to today using inverse square
 def inverseSquareFunction(range, year): 
-    return int(((year / range)**2) * range)
+    return inverseXFunction(range, year, 2)
+
+def inverse1_75Function(range, year):
+    return inverseXFunction(range, year, 1.75)
+
+def inverse1_5Function(range, year):
+    return inverseXFunction(range, year, 1.5)
+
+def inverseXFunction(range, year, exp):
+    return int(((year / range)**exp) * range)
+
+
+
+def testAll():
+    testDistribution()
+def testDistribution():
+    min = 1890
+    max = date.today().year + 1
+    func = inverse1_5Function
+    years = {}
+    for i in range(0, 1000):
+        y = getRandomYear(1890, func)
+        years[y] = years.get(y, 0) + 1
+    for i in range(min, max):
+        print(f"{i}, {years.get(i, 0)}")
+
