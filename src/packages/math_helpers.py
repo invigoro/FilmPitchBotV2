@@ -9,7 +9,7 @@ def getRandomYear(min, weightingFunc):
         sys.exit("Invalid start year.")
 
     range = today - min
-    year = random.randint(0, range)
+    year = random.uniform(0, range)
     return today - weightingFunc(range, year)
 
 # Weights years closer to today using inverse square
@@ -23,7 +23,7 @@ def inverse1_5Function(range, year):
     return inverseXFunction(range, year, 1.5)
 
 def inverseXFunction(range, year, exp):
-    return int(((year / range)**exp) * range)
+    return round(((float(year) / float(range))**float(exp)) * float(range))
 
 
 
@@ -32,7 +32,7 @@ def testAll():
 def testDistribution():
     min = 1890
     max = date.today().year + 1
-    func = inverse1_5Function
+    func = inverse1_75Function
     years = {}
     for i in range(0, 1000):
         y = getRandomYear(1890, func)
