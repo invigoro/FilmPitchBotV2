@@ -170,7 +170,7 @@ def getRandomSentenceStart(paragraphs):
         result = str.split(cleaned[start], " ")[0]
     return result
 
-def fixGrammar(content, isTitle):
+def fixGrammar(content, isTitle = False):
     content = content.strip()
     content = removeMultipleSpaces(content)
     if (isTitle):

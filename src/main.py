@@ -43,6 +43,7 @@ def mainFunc():
             break
         overview.extend(sen)
     the_movie.overview = " ".join(overview).strip()
+    the_movie.overview = fixGrammar(the_movie.overview)
 
     ### OpenAI reword
     OVERVIEW_MIN_SENTENCES = 1
@@ -61,7 +62,7 @@ def mainFunc():
     bigrams = mergeGrams(createBigrams(text), bigrams)
     trigrams = mergeGrams(createTrigrams(text), trigrams)
     the_movie.title = " ".join(generateSentence(bigrams, trigrams, seed, None, TITLE_GOAL_LENGTH)).strip(". ").title()
-    the_movie.title = fixGrammar(the_movie.title)
+    the_movie.title = fixGrammar(the_movie.title, True)
 
     ### OpenAI reword
     TITLE_RANDOMNESS = 0.7
