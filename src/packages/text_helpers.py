@@ -199,4 +199,15 @@ def removeSubtitleRandom(content, removalProbability = 0.8):
     return result
 
 def removeSubTitle(content):
-    return ":".split(content)[0]
+    return content.split(": ")[0]
+
+# Unit tests
+def testAll():
+    testSubtitles()
+
+def testSubtitles():
+    titleWithSub = "The Golden Age: Arc I - Tenfold"
+    print(f"Removed: {removeSubTitle(titleWithSub)}")
+    for i in range(0, 10):
+        prob = 0.6
+        print(f"Prob removal {prob}: {removeSubtitleRandom(titleWithSub, prob)}")

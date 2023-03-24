@@ -43,7 +43,6 @@ def mainFunc():
             break
         overview.extend(sen)
     the_movie.overview = " ".join(overview).strip()
-    the_movie.overview = removeSubtitleRandom(the_movie.overview)
 
     ### OpenAI reword
     OVERVIEW_MIN_SENTENCES = 1
@@ -64,6 +63,7 @@ def mainFunc():
     trigrams = mergeGrams(createTrigrams(text), trigrams)
     the_movie.title = " ".join(generateSentence(bigrams, trigrams, seed, None, TITLE_GOAL_LENGTH)).strip(". ").title()
     the_movie.title = fixGrammar(the_movie.title, True)
+    the_movie.title = removeSubtitleRandom(the_movie.title, 0.55) #subtitles appear with too great of a frequency
 
     ### OpenAI reword
     TITLE_RANDOMNESS = 0.7
