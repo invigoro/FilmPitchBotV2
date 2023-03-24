@@ -52,7 +52,7 @@ def getAIPoster(title, year, tagLine, useCraiyon = False):
             if "safety system" in str(e).lower(): #some get rejected for containing charged or offensive words
                 print(prompt)
                 raise Exception(e)   
-        print(f'Image generation took {(datetime.now() - start_request).total_seconds} seconds.')         
+        print(f'Image generation took {(datetime.now() - start_request).total_seconds()} seconds.')         
         return image_url
             
 def getCastListAI(title, year, description, temperature = 1, minNames = 1, maxNames = 3, maxLength = 30):
