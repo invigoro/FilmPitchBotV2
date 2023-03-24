@@ -43,7 +43,6 @@ def mainFunc():
             break
         overview.extend(sen)
     the_movie.overview = " ".join(overview).strip()
-    the_movie.overview = fixGrammar(the_movie.overview)
     the_movie.overview = removeSubtitleRandom(the_movie.overview)
 
     ### OpenAI reword
@@ -51,6 +50,7 @@ def mainFunc():
     OVERVIEW_MAX_SENTENCES = 3
     OVERVIEW_RANDOMNESS = 0.5
     the_movie.overview = getAIOverview(the_movie.overview, OVERVIEW_MIN_SENTENCES, OVERVIEW_MAX_SENTENCES, OVERVIEW_MAX_LENGTH, OVERVIEW_RANDOMNESS).strip()
+    the_movie.overview = fixGrammar(the_movie.overview)
 
     # Second, get the title
     # Also search for other titles containing the same word

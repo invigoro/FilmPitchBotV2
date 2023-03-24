@@ -175,6 +175,7 @@ def fixGrammar(content, isTitle = False):
     content = removeMultipleSpaces(content)
     content = removeNewlines(content)
     content = removeTabs(content)
+    content = removeBackspaces(content)
     if (isTitle):
         content = content.title()
     return content
@@ -183,12 +184,15 @@ def removeMultipleSpaces(content):
     return re.sub("/\s\s+/g", " ", content)
 
 def removeNewlines(content):
-    return re.sub("\n", "", content)
+    return re.sub("\n|\r", " ", content)
 
 def removeTabs(content):
     return re.sub("\t", "", content)
 
-def removeSubtitleRandom(content, removalProbability = 0.75):
+def removeBackspaces(content):
+    return re.sub("\b", "", content)
+
+def removeSubtitleRandom(content, removalProbability = 0.8):
     result = content
     if(removalProbability > random.random()):
         result = removeSubTitle(result)

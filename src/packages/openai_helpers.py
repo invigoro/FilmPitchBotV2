@@ -64,7 +64,7 @@ def getCastListAI(title, year, description, temperature = 1, minNames = 1, maxNa
               f"\nDescription: {description}"
               f"\nActors:")
     output = openai.Completion.create(model=TEXT_CREATE_MODEL, prompt = prompt, temperature = temperature, max_tokens=maxLength)['choices'][0]['text']
-    return set(map(lambda s: s.strip(), output.split(", ")))
+    return set(map(lambda s: s.strip(), output.split(", ")[:names]))
     
 def getDirectorAI(title, year, description, cast, temperature = 1, maxLength = 20):
     prompt = (f"Write the name of a possible director of a movie based on the movie's title, year, description, and cast members."
