@@ -173,9 +173,26 @@ def getRandomSentenceStart(paragraphs):
 def fixGrammar(content, isTitle = False):
     content = content.strip()
     content = removeMultipleSpaces(content)
+    content = removeNewlines(content)
+    content = removeTabs(content)
     if (isTitle):
         content = content.title()
     return content
 
 def removeMultipleSpaces(content):
-    return re.sub("[\s]*", " ", content)
+    return re.sub("/\s\s+/g", " ", content)
+
+def removeNewlines(content):
+    return re.sub("\n", "", content)
+
+def removeTabs(content):
+    return re.sub("\t", "", content)
+
+def removeSubtitleRandom(content, removalProbability = 0.75):
+    result = content
+    if(removalProbability > random.random()):
+        result = removeSubTitle(result)
+    return result
+
+def removeSubTitle(content):
+    return ":".split(content)[0]

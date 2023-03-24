@@ -73,7 +73,8 @@ def getDirectorAI(title, year, description, cast, temperature = 1, maxLength = 2
               f"\nDescription: {description}"
               f"\nCast members: {', '.join(cast)}"
               f"\nDirector:")
-    return openai.Completion.create(model=TEXT_CREATE_MODEL, prompt = prompt, temperature = temperature, max_tokens=maxLength)['choices'][0]['text']
+    output = openai.Completion.create(model=TEXT_CREATE_MODEL, prompt = prompt, temperature = temperature, max_tokens=maxLength)['choices'][0]['text']
+    return output.strip()
 
 def rewriteTitleAI(content, temperature = 0.3):
     instructions = (f"Rewrite this text to sound like the title of a motion picture."

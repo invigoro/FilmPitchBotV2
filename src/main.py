@@ -44,6 +44,7 @@ def mainFunc():
         overview.extend(sen)
     the_movie.overview = " ".join(overview).strip()
     the_movie.overview = fixGrammar(the_movie.overview)
+    the_movie.overview = removeSubtitleRandom(the_movie.overview)
 
     ### OpenAI reword
     OVERVIEW_MIN_SENTENCES = 1

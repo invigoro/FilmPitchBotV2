@@ -60,7 +60,7 @@ class generatedProduction:
         bottomline += f"\nStarring: {', '.join(self.cast)}"
         totallength = len(topline) + len(overview) + len(bottomline)
         if totallength > 280:
-            overview = overview[0:-((totallength - 280) + 3)].strip() + "..."
+            overview = "\n" + overview[0:-((totallength - 280) + 4)].strip() + "..." # 4 = 1 newline + 3 periods
         return topline + overview + bottomline
 
 # Unit test for getinfo280
