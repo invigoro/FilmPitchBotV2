@@ -13,7 +13,7 @@ def getRandomYear(min, weightingFunc):
     return today - weightingFunc(range, year)
 
 # Weights years closer to today using inverse square
-def inverseSquareFunction(range, year): 
+def inverse2_0Function(range, year): 
     return inverseXFunction(range, year, 2)
 
 def inverse1_75Function(range, year):
