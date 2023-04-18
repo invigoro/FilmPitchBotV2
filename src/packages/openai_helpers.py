@@ -2,6 +2,7 @@ import openai
 import random
 from craiyon import Craiyon
 from datetime import datetime
+import traceback
 generator = Craiyon() # Instantiates the api wrapper
 
 TEXT_CREATE_MODEL = "text-davinci-003"
@@ -50,6 +51,7 @@ def getAIPoster(title, year, tagLine, useCraiyon = False):
                 image_url = response['data'][0]['url']
         except Exception as e:
             print(e)
+            print(traceback.format_exception(e))
             if "safety system" in str(e).lower(): #some get rejected for containing charged or offensive words
                 print(prompt)
                 raise Exception(e)   
