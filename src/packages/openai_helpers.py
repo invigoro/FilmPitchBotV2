@@ -44,6 +44,7 @@ def getAIPoster(title, year, tagLine, useCraiyon = False):
         try: 
             if(useCraiyon):
                 image_url = generator.generate(prompt).images.pop()
+                print("Image url: " + image_url)
             else:
                 response = openai.Image.create(prompt=prompt, n=1, size=f'{STD_WIDTH}x{STD_HEIGHT}')
                 image_url = response['data'][0]['url']

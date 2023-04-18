@@ -29,14 +29,16 @@ class Twitter:
                         for chunk in request:
                             image.write(chunk)
                     media = self.api.simple_upload(filename=filename)
+                    print("Image uploaded")
                     self.client.create_tweet(text=content, user_auth=True, media_ids=[media.media_id_string])
                     #self.api.update_status_with_media(status = content, filename = filename)
                     os.remove(filename)
                 else:
                     print("Unable to download image")
-                    self.client.create_tweet(text=content, user_auth=False)
+                    self.client.create_tweet(text=content, user_auth=True)
             else:
-                self.client.create_tweet(text=content, user_auth=False)
+                print("No image URL provided")
+                self.client.create_tweet(text=content, user_auth=True)
             print(f'Tweet posted: \n{content}')
         except Exception as e:
             print(e)
