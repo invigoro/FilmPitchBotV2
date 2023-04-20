@@ -78,7 +78,7 @@ def mainFunc():
     TAGLINE_MAX_LENGTH = 30
     TAGLINE_RANDOMNESS = 0.5
     the_movie.tagline = getAITagLine(the_movie.overview, TAGLINE_MIN_WORDS, TAGLINE_MAX_WORDS, TAGLINE_MAX_LENGTH, TAGLINE_RANDOMNESS).strip()
-    the_movie.imgUrl = getAIPoster(the_movie.title, the_movie.year, the_movie.tagline, True)
+    the_movie.imgUrl = getAIPoster(the_movie.title, the_movie.year, the_movie.tagline, False)
 
     # Last, get a cast list & director
     ### OpenAI attempt
