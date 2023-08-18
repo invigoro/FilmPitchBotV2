@@ -102,11 +102,16 @@ def mainFunc():
     twitter.MakePost(formatted, the_movie.imgUrl)
     print("Success.")
 
+errors = []
 # Allow for three tries since sometimes posting fails
 for i in range(0, 3):
     try:
         mainFunc()
         break
     except Exception as e:
-        print(e)
+        errors.append(e)
+        traceback.print_exception(e)
         continue
+
+if len(errors) >= 3:
+    raise Exception("More than 3 uncaught exceptions happened.")

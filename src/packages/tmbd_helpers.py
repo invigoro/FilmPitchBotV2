@@ -19,12 +19,17 @@ def getFilms(year, tolerance, pages):
 def convertFilms(movies):
     films = []
     for m in movies:
-        film = Film(
-            m.title if hasattr(m, 'title') else None,
-            m.overview if hasattr(m, 'overview') else None, 
-            m.release_date if hasattr(m, 'release_date') else None, 
-            m.id)
-        films.append(film)
+        print(str(m))
+        try:
+            film = Film(
+                m.title if hasattr(m, 'title') else None,
+                m.overview if hasattr(m, 'overview') else None, 
+                m.release_date if hasattr(m, 'release_date') else None, 
+                m.id)
+            films.append(film)
+        except:
+            #may return an invalid type
+            continue
 
     return films
 
@@ -63,9 +68,6 @@ def searchMovies(term, pages):
     search = Search()
     films = []
     for page in range(1, pages):
-        movies = search.movies({
-            'query': term,
-            'page': page
-        })
+        movies = search.movies(term, None, None, None, None, page)
         films.extend(convertFilms(movies))
     return films
