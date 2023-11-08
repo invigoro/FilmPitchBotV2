@@ -1,15 +1,16 @@
-import openai
+from openai import OpenAI
 import random
 from craiyon import Craiyon
 from datetime import datetime
 import traceback
 generator = Craiyon() # Instantiates the api wrapper
 
-TEXT_CREATE_MODEL = "text-davinci-003"
+TEXT_CREATE_MODEL = "gpt-3.5-turbo-instruct"
 TEXT_EDIT_MODEL = "text-davinci-edit-001"
 
-def openAIInitialize(key): 
-    openai.api_key = key
+def openAIInitialize(key):
+    global client
+    client = OpenAI(api_key = key)
 
 def getAIOverview(original, minSentences = 1, maxSentences = 3, maxLength = 180, temperature = 0.2):
     prompt = (f'Write a {minSentences}-{maxSentences} sentence overview of a movie based on a description.'
@@ -19,7 +20,7 @@ def getAIOverview(original, minSentences = 1, maxSentences = 3, maxLength = 180,
         original = original[:maxLength] #insure we don't have way to big of an input by accident
     for i in range(0, 5):
         try:
-            return openai.Completion.create(model=TEXT_CREATE_MODEL, prompt = prompt, temperature = temperature, max_tokens = maxLength)['choices'][0]['text']
+            return client.completions.create(model=TEXT_CREATE_MODEL, prompt = prompt, temperature = temperature, max_tokens = maxLength).choices.pop().text
         except Exception as e:
             print(e) 
             return original
@@ -28,7 +29,7 @@ def getAITagLine(description, minWords = 2, maxWords = 8, maxLength = 30, temper
     prompt = random.choice(DEFAULT_PROMPTS_TAGLINE)(minWords, maxWords, description)
     for i in range(0, 5):
         try:
-            return openai.Completion.create(model=TEXT_CREATE_MODEL, prompt = prompt, temperature = temperature, max_tokens = maxLength)['choices'][0]['text']
+            return client.completions.create(model=TEXT_CREATE_MODEL, prompt = prompt, temperature = temperature, max_tokens = maxLength).choices.pop().text
         except Exception as e:
             print(e) 
             return description
@@ -47,13 +48,13 @@ def getAIPoster(title, year, tagLine, useCraiyon = False):
                 image_url = generator.generate(prompt).images.pop()
                 print("Image url: " + image_url)
             else:
-                response = openai.Image.create(prompt=prompt, n=1, size=f'{STD_WIDTH}x{STD_HEIGHT}')
-                image_url = response['data'][0]['url']
+                response = client.images.generate(prompt=prompt, n=1, size=f'{STD_WIDTH}x{STD_HEIGHT}')
+                image_url = response.data.pop().url
         except Exception as e:
             print(e)
             print(traceback.format_exception(e))
             if "safety system" in str(e).lower(): #some get rejected for containing charged or offensive words
-                print(prompt)
+                print("Offensive prompt: " + prompt)
                 raise Exception(e)   
         print(f'Image generation took {(datetime.now() - start_request).total_seconds()} seconds.')         
         return image_url
@@ -66,7 +67,7 @@ def getCastListAI(title, year, description, temperature = 1, minNames = 1, maxNa
               f"\nYear: {year}"
               f"\nDescription: {description}"
               f"\nActors:")
-    output = openai.Completion.create(model=TEXT_CREATE_MODEL, prompt = prompt, temperature = temperature, max_tokens=maxLength)['choices'][0]['text']
+    output = client.completions.create(model=TEXT_CREATE_MODEL, prompt = prompt, temperature = temperature, max_tokens=maxLength).choices.pop().text
     return set(map(lambda s: s.strip(), output.split(", ")[:names]))
     
 def getDirectorAI(title, year, description, cast, temperature = 1, maxLength = 20):
@@ -76,7 +77,7 @@ def getDirectorAI(title, year, description, cast, temperature = 1, maxLength = 2
               f"\nDescription: {description}"
               f"\nCast members: {', '.join(cast)}"
               f"\nDirector:")
-    output = openai.Completion.create(model=TEXT_CREATE_MODEL, prompt = prompt, temperature = temperature, max_tokens=maxLength)['choices'][0]['text']
+    output = client.completions.create(model=TEXT_CREATE_MODEL, prompt = prompt, temperature = temperature, max_tokens=maxLength).choices.pop().text
     return output.strip()
 
 def rewriteTitleAI(content, temperature = 0.3):
@@ -84,7 +85,7 @@ def rewriteTitleAI(content, temperature = 0.3):
     f"\nText: {content}"
     f"\nTitle:")
     try: 
-        return openai.Completion.create(model=TEXT_CREATE_MODEL, prompt = instructions, temperature = temperature, max_tokens = len(content))['choices'][0]['text']
+        return client.completions.create(model=TEXT_CREATE_MODEL, prompt = instructions, temperature = temperature, max_tokens = len(content)).choices.pop().text
     except Exception as e:
         print(e)
         return content
@@ -93,7 +94,7 @@ def fixGrammarAI(content):
     instructions = "Fix punctuation, grammar, and capitalization"
     for i in range(0, 3):
         try:
-            return openai.Edit.create(model = TEXT_EDIT_MODEL, input=content, instruction = instructions)['choices'][0]['text']
+            return client.edits.create(model = TEXT_EDIT_MODEL, input=content, instruction = instructions).choices.pop().text
         except Exception as e:
             print(e)
             return content

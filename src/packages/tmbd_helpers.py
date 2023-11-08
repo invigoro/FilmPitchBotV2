@@ -19,7 +19,6 @@ def getFilms(year, tolerance, pages):
 def convertFilms(movies):
     films = []
     for m in movies:
-        print(str(m))
         try:
             film = Film(
                 m.title if hasattr(m, 'title') else None,

@@ -51,7 +51,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install tmdbv3api
           pip install tweepy
-          pip install openai
+          pip install openai==1.1.1
           pip install requests
           pip install craiyon.py
       - name: Run the thing
